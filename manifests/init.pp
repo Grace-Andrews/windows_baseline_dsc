@@ -47,8 +47,17 @@ class profile::windows::baseline_dsc {
 
   # USERS
   user { 'Puppet Demo':
-    ensure   => present,
-    groups   => ['Administrators'],
+    ensure => present,
+    groups => ['Administrators'],
+    before => Service['ssh'],
+  }
+
+  # SERVICE
+  dsc_service { 'ssh':
+    dsc_ensure     => present,
+    dsc_state      => 'running',
+    dsc_name       => 'BvSshServer',
+    dsc_credential => 'Puppet Demo',
   }
 
   # REG KEYS
